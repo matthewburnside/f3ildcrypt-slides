@@ -22,7 +22,9 @@ Columbia University\\
 \begin{frame}
 \frametitle{Motivation}
 \begin{itemize}
-\item Blah blah!
+\item Identity-related information is valuable
+\item You must provide such information when using an online merchant
+\item Can we protect this information end-to-end?
 \end{itemize}
 \end{frame}
 
@@ -35,15 +37,42 @@ Columbia University\\
 
 \begin{frame}
 \frametitle{Introduction}
-Here is one slide.
+\begin{itemize}
+\item Users have to trust online merchants:
+\item Merchant is not malicious
+\item Merchant site is maintained by diligent sysadmins
+\item Merchant will protect always sensitive information
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{SOA Trust}
+\begin{itemize}
+\item In Service Oriented Architectures, have to trust:
+\item Merchant \emph{and peer SOAs} are not malicious
+\item Merchant \emph{and peer SOAs} are maintained by diligent sysadmins
+\item Merchant \emph{and peer SOAs} will always protect sensitive information
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Data in Transit}
+\begin{itemize}
+\item In this work, we focus on data in transit
+\item We protect the data from the web browser to the back-end database
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example}
+\begin{itemize}
+\item XXX: Diagram showing web browser, merchant, and SOA doing credit-card
+transactions.  Even with SSL, only protected from web browser to merchant.
+\end{itemize}
 \end{frame}
 
 \section{Related Work}
 
-\begin{frame}
-\frametitle{Proxy Re-Encryption}
-Here is one slide.
-\end{frame}
 
 \begin{frame}
 \frametitle{XACML}
@@ -62,10 +91,8 @@ Here is one slide.
 \end{frame}
 
 \begin{frame}
-\frametitle{Test Graphics}
-\begin{center} 
-  \includegraphics[width=0.6\textwidth]{example_network.pdf} 
-\end{center} 
+\frametitle{Proxy Re-Encryption}
+Here is one slide.
 \end{frame}
 
 \section{Evaluation}
