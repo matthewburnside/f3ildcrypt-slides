@@ -25,7 +25,8 @@ Columbia University\\
 \item Identity-related information is valuable
 \item You must provide such information when using an online merchant
 \item This information is vulnerable to disclosure at many points
-\item Can we protect this information end-to-end?
+\item Can we protect this information end-to-end without revealing details of
+the logical corporate architecture?
 \end{itemize}
 \end{frame}
 
@@ -49,7 +50,7 @@ Columbia University\\
 \begin{frame}
 \frametitle{SOA trust}
 \begin{itemize}
-\item In Service Oriented Architectures, have to trust:
+\item In Service Oriented Architectures, users have to trust:
 \item Merchant \emph{and peer SOAs} are not malicious
 \item Merchant \emph{and peer SOAs} are maintained by diligent sysadmins
 \item Merchant \emph{and peer SOAs} will always protect sensitive information
@@ -72,6 +73,15 @@ transactions.  Even with SSL, only protected from web browser to merchant.
 \end{itemize}
 \end{frame}
 
+\begin{frame}
+\frametitle{Pair-wise key distribution}
+\begin{itemize}
+\item Generate and distribute a key for each potential target host in the SOA
+pipeline.  
+\item 
+\end{itemize}
+\end{frame}
+
 \section{Related work}
 
 % \begin{frame}
@@ -84,7 +94,8 @@ transactions.  Even with SSL, only protected from web browser to merchant.
 
 \begin{frame}
 \frametitle{Proxy re-encryption}
-For all plaintext $P$, Alice: $(pk_A, sk_A)$, Bob: $(pk_B, sk_B)$:
+For all plaintext $P$, Alice $\langle pk_A, sk_A \rangle$, Bob $\langle pk_B,
+sk_B \rangle$:
 \begin{equation*}
 pk_B(p) = rk_{A \to B}( pk_A (P))
 \end{equation*}
@@ -150,10 +161,32 @@ pk_B(p) = rk_{A \to B}( pk_A (P))
 \begin{frame}
 \frametitle{Key generation}
 \begin{itemize}
-\item Key pair $pk_{E_s}, sk_{E_s}$ generated at the \alert{external-key holder}
+\item Key pair $\langle pk_{E_s}, sk_{E_s} \rangle$ generated at the
+\alert{external-key holder}
 \item Public keys of applications $pk_{I_0}...pk_{I_n}$ are collected
 \item Used in conjunction with $sk_{E_s}$ to generate $rk_{E \to I_0}...rk_{E
 \to I_n}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{F3ieldCrypt architecture (cont.)}
+\begin{itemize}
+\item By proxy re-encryption:
+\begin{equation*}
+pk_{I_j}(P) = rk_{E \to I_j}( pk_E (P))
+\end{equation*}
+\item Keys $rk_{E \to I_0}...rk_{E \to I_n}$ stored at \alert{proxy
+re-encryption engine}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Proxy re-encryption engine}
+\begin{itemize}
+\item Fields arrive at PRE encrypted under $pk_{E_s}$
+\item Each field $f$ is re-encrypted under $pk_{E \to I_j}$
+\item The mapping $f \to j$ is determined from a XACML policy
 \end{itemize}
 \end{frame}
 
