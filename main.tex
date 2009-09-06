@@ -24,6 +24,7 @@ Columbia University\\
 \begin{itemize}
 \item Identity-related information is valuable
 \item You must provide such information when using an online merchant
+\item This information is vulnerable to disclosure at many points
 \item Can we protect this information end-to-end?
 \end{itemize}
 \end{frame}
@@ -46,7 +47,7 @@ Columbia University\\
 \end{frame}
 
 \begin{frame}
-\frametitle{SOA Trust}
+\frametitle{SOA trust}
 \begin{itemize}
 \item In Service Oriented Architectures, have to trust:
 \item Merchant \emph{and peer SOAs} are not malicious
@@ -56,7 +57,7 @@ Columbia University\\
 \end{frame}
 
 \begin{frame}
-\frametitle{Data in Transit}
+\frametitle{Data in transit}
 \begin{itemize}
 \item In this work, we focus on data in transit
 \item We protect the data from the web browser to the back-end database
@@ -71,40 +72,149 @@ transactions.  Even with SSL, only protected from web browser to merchant.
 \end{itemize}
 \end{frame}
 
-\section{Related Work}
+\section{Related work}
 
+% \begin{frame}
+% \frametitle{XACML}
+% \begin{itemize}
+% \item eXtensible Access Control Markup Language
+% \item XML standard for defining policies, requests, and reponses
+% \end{itemize}
+% \end{frame}
 
 \begin{frame}
-\frametitle{XACML}
-Here is one slide.
+\frametitle{Proxy re-encryption}
+For all plaintext $P$, Alice: $(pk_A, sk_A)$, Bob: $(pk_B, sk_B)$:
+\begin{equation*}
+pk_B(p) = rk_{A \to B}( pk_A (P))
+\end{equation*}
+\begin{itemize}
+\item \cite{atomic_proxy_reencryption} 
+\item \cite{proxy_reencryption}
+\end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{W3bCrypt}
-Here is one slide.
+\begin{itemize}
+\item Introduced end-to-end encryption in web pipelines
+\item Firefox plugin for application-level crypto
+\item Requires disclosure of corporate network details
+\end{itemize}
 \end{frame}
 
 \section{Architecture}
 \begin{frame}
 \frametitle{Architecture}
-Here is one slide.
+\begin{itemize}
+\item Design goals
+\item F3ieldCrypt architecture
+\item Example session
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Proxy Re-Encryption}
-Here is one slide.
+\frametitle{Network model}
+\begin{itemize}
+\item SOA-style network
+\item Each SOA may have multiple child SOAs
+\item SOAs wish to prevent disclosure of logical architecture and peering 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Threat model}
+\begin{itemize}
+\item XXX
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Design goals}
+\begin{itemize}
+\item End-to-end protection of XML fields -- even across SOA boundaries
+\item Confidentiality of logical architecture of each SOA must be respected
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{F3ieldCrypt architecture}
+\begin{itemize}
+\item Each SOA $s$ publishes a public key $pk_{E_s}$
+\item Browser $b$ generates plaintext $P$
+\item $b$ sends $C = pk_{E_s}(P)$ 
+\item At $s$, proxy re-encrypt $C$ to internal hosts and child SOAs $0...n$ 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Key generation}
+\begin{itemize}
+\item Key pair $pk_{E_s}, sk_{E_s}$ generated at the \alert{external-key holder}
+\item Public keys of applications $pk_{I_0}...pk_{I_n}$ are collected
+\item Used in conjunction with $sk_{E_s}$ to generate $rk_{E \to I_0}...rk_{E
+\to I_n}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example session}
+\begin{itemize}
+\item
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Evaluation}
+\begin{itemize}
+\item
+\end{itemize}
 \end{frame}
 
 \section{Evaluation}
 \begin{frame}
 \frametitle{Evaluation}
-Here is one slide.
+\begin{itemize}
+\item
+\end{itemize}
+\end{frame}
+
+\section{Evaluation}
+\begin{frame}
+\frametitle{Evaluation}
+\begin{itemize}
+\item
+\end{itemize}
 \end{frame}
 
 \section{Conclusion}
 \begin{frame}
 \frametitle{Conclusion}
-Here is another slide.
+\begin{itemize}
+\item
+\end{itemize}
 \end{frame}
+
+\begin{thebibliography}{10}
+\frametitle{References}
+\bibitem[Ateniese et al., 2005]{proxy_reencryption}
+G.~Ateniese, K.~Fu, M.~Green, and S.~Hohenberger.
+\newblock Improved proxy re-encryption schemes with applications to secure
+  distributed storage.
+\newblock In {\em Proceedings of the 12th Annual Network and Distributed
+  Systems Security Symposium (NDSS 2005)}, 2005.
+
+\bibitem[Blaze et al., 1998]{atomic_proxy_reencryption}
+Matt Blaze, G.~Bleumer, and M.~Strauss.
+\newblock Divertible protocols and atomic proxy cryptography.
+\newblock In {\em Proceedings of Eurocrypt '98}, pages 127--144, 1998.
+
+\bibitem[Stavrou et al., 2006]{w3bcrypt}
+Angelos Stavrou, Michael Locasto, and Angelos Keromytis.
+\newblock W3bcrypt: Encryption as a stylesheet.
+\newblock In {\em Proceedings of the 4th Applied Cryptography and Network
+  Security Conference (ACNS 2006)}, pages 349--364, 2006.
+
+\end{thebibliography}
 
 \end{document} 
