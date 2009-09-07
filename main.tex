@@ -196,48 +196,79 @@ re-encryption engine}
 \frametitle{Client policy and crypto engines}
 Web clients receive a re-cryptography engine and a policy engine. 
 \medskip
-\begin{description}
-\item[Policy engine] JavaScript engine; uses a XACML policy to determine which
-fields to encrypt
-\item[Re-crypto engine] Java-based, uses JHU-MIT Proxy Re-cryptography Library
-\end{description}
-\end{frame}
-
-\begin{frame}
-\frametitle{Evaluation}
 \begin{itemize}
-\item
+\item \alert{Policy engine} uses a XACML policy to determine which fields to
+encrypt
+\item \alert{Re-crypto engine} encrypts XML fields as directed by the policy
+engine.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Evaluation}
+\frametitle{Architecture summary}
 \begin{itemize}
-\item
+\item XXX: insert image
 \end{itemize}
 \end{frame}
 
 \section{Evaluation}
 \begin{frame}
-\frametitle{Evaluation}
+\frametitle{Implementation}
 \begin{itemize}
-\item
+\item Java-based Re-crypto engine based on JHU-MIT Proxy Re-cryptography
+Library for each web client
+\item Python-based XML proxy for each internal application to store keys and
+unwrap XML
+\item XML gateway at the SOA stores the re-encryption engine 
 \end{itemize}
 \end{frame}
 
-\section{Evaluation}
 \begin{frame}
-\frametitle{Evaluation}
+\frametitle{Testbed servers}
+Dell PowerEdge 2650 Servers
 \begin{itemize}
-\item
+\item 2.0GHz Intel Zeon processor, 1GB RAM, Gigabit Ethernet
+\item OpenBSD 4.2
+\item OpenBSD PF firewall, Apache 1.3.29, PHP 4.4.1, MySQL 5.0.45 
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Testbed client}
+Macbook Pro
+\begin{itemize}
+\item 2.4 GHz Intel Core 2 Duo, 2GB RAM, Gigabit Ethernet
+\item OS X 10.5.2, Darwin kernel 9.2.2, Mozilla Firefox 2.0.0.13
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Block encryption on the client}
+\begin{center}
+\includegraphics{client_field_count_new} \\
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Re-encryption rate at an XML gateway}
+\begin{center}
+\includegraphics{server_encrypt} \\
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Decryption rate at an XML proxy}
+\begin{center}
+\includegraphics{server_decrypt} \\
+\end{center}
 \end{frame}
 
 \section{Conclusion}
 \begin{frame}
 \frametitle{Conclusion}
 \begin{itemize}
-\item
+\item End-to-end protection to users and SOAs
+\item XXX
 \end{itemize}
 \end{frame}
 
