@@ -24,7 +24,8 @@ Columbia University\\
 \begin{itemize}
 \item Identity-related information is valuable
 \item You must provide such information when using an online merchant
-\item This information is vulnerable to disclosure at many points
+\item This information is vulnerable to disclosure at the endpoints and in
+transit 
 \item Can we protect this information end-to-end without revealing details of
 the logical corporate architecture?
 \end{itemize}
@@ -39,21 +40,22 @@ the logical corporate architecture?
 
 \begin{frame}
 \frametitle{Introduction}
+Users have to trust online merchants:
+\smallskip
 \begin{itemize}
-\item Users have to trust online merchants:
 \item Merchant is not malicious
+\item Merchant will always protect sensitive information
 \item Merchant site is maintained by diligent sysadmins
-\item Merchant will protect always sensitive information
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{SOA trust}
+In Service Oriented Architectures, users have to trust:
 \begin{itemize}
-\item In Service Oriented Architectures, users have to trust:
 \item Merchant \emph{and peer SOAs} are not malicious
-\item Merchant \emph{and peer SOAs} are maintained by diligent sysadmins
 \item Merchant \emph{and peer SOAs} will always protect sensitive information
+\item Merchant \emph{and peer SOAs} are maintained by diligent sysadmins
 \end{itemize}
 \end{frame}
 
@@ -61,29 +63,41 @@ the logical corporate architecture?
 \frametitle{Data in transit}
 \begin{itemize}
 \item In this work, we focus on data in transit
+\item Approach does not protect against nodes with legitimate access to the data
 \item We protect the data from the web browser to the back-end database
 \end{itemize}
 \end{frame}
 
+% \begin{frame}
+% \frametitle{Example}
+% \begin{itemize}
+% \item XXX: Diagram showing web browser, merchant, and SOA doing credit-card
+% transactions.  Even with SSL, only protected from web browser to merchant.
+% \end{itemize}
+% \end{frame}
+
 \begin{frame}
-\frametitle{Example}
+\frametitle{Design alternative}
+Pair-wise key distribution
+\smallskip
 \begin{itemize}
-\item XXX: Diagram showing web browser, merchant, and SOA doing credit-card
-transactions.  Even with SSL, only protected from web browser to merchant.
+\item Generate a certificate for each potential target host in the SOA pipeline
+\item Deliver certificate set to each web browser
+\item Browser encrypts each field direct to its destination host 
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Pair-wise key distribution}
 \begin{itemize}
-\item Generate and distribute a key for each potential target host in the SOA
-pipeline.  
-\item Naive -- doesn't work!  XXX
+\item Certificates for all hosts in any partner SOAs must also be delivered
+\item Certificate set must be updated each time the architecture of the SOA or
+SOA partners varies
+\item Reveals the logical architecture of the SOA and its SOA partners
 \end{itemize}
 \end{frame}
 
 \section{Related work}
-
 % \begin{frame}
 % \frametitle{XACML}
 % \begin{itemize}
@@ -93,7 +107,7 @@ pipeline.
 % \end{frame}
 
 \begin{frame}
-\frametitle{Proxy re-encryption}
+\frametitle{Related work: Proxy re-encryption}
 For all plaintext $P$, Alice $\langle pk_A, sk_A \rangle$, Bob $\langle pk_B,
 sk_B \rangle$:
 \begin{equation*}
@@ -128,7 +142,7 @@ pk_B(p) = rk_{A \to B}( pk_A (P))
 \frametitle{Network model}
 \begin{itemize}
 \item SOA-style network
-\item Each SOA may have multiple child SOAs
+\item Each SOA may have multiple partner SOAs
 \item SOAs wish to prevent disclosure of logical architecture and peering 
 \end{itemize}
 \end{frame}
@@ -156,7 +170,7 @@ legitimate access to sensitive information.}
 \item Each SOA $s$ publishes a public key $pk_{E_s}$
 \item Browser $b$ generates plaintext $P$
 \item $b$ sends $C = pk_{E_s}(P)$ 
-\item At $s$, proxy re-encrypt $C$ to internal hosts and child SOAs $0...n$ 
+\item At $s$, proxy re-encrypt $C$ to internal hosts and partner SOAs $0...n$ 
 \end{itemize}
 \end{frame}
 
