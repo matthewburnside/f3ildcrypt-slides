@@ -78,7 +78,7 @@ transactions.  Even with SSL, only protected from web browser to merchant.
 \begin{itemize}
 \item Generate and distribute a key for each potential target host in the SOA
 pipeline.  
-\item 
+\item Naive -- doesn't work!  XXX
 \end{itemize}
 \end{frame}
 
@@ -146,6 +146,8 @@ pk_B(p) = rk_{A \to B}( pk_A (P))
 \item End-to-end protection of XML fields -- even across SOA boundaries
 \item Confidentiality of logical architecture of each SOA must be respected
 \end{itemize}
+\emph{Do not provide protection against compromise or failure of entities with
+legitimate access to sensitive information.}
 \end{frame}
 
 \begin{frame}
@@ -191,7 +193,18 @@ re-encryption engine}
 \end{frame}
 
 \begin{frame}
-\frametitle{Example session}
+\frametitle{Client policy and crypto engines}
+Web clients receive a re-cryptography engine and a policy engine. 
+\medskip
+\begin{description}
+\item[Policy engine] JavaScript engine; uses a XACML policy to determine which
+fields to encrypt
+\item[Re-crypto engine] Java-based, uses JHU-MIT Proxy Re-cryptography Library
+\end{description}
+\end{frame}
+
+\begin{frame}
+\frametitle{Evaluation}
 \begin{itemize}
 \item
 \end{itemize}
