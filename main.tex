@@ -52,6 +52,7 @@ Users have to trust online merchants:
 \begin{frame}
 \frametitle{SOA trust}
 In Service Oriented Architectures, users have to trust:
+\smallskip
 \begin{itemize}
 \item Merchant \emph{and peer SOAs} are not malicious
 \item Merchant \emph{and peer SOAs} will always protect sensitive information
@@ -61,10 +62,11 @@ In Service Oriented Architectures, users have to trust:
 
 \begin{frame}
 \frametitle{Data in transit}
+In this work, we focus on data in transit
+\smallskip
 \begin{itemize}
-\item In this work, we focus on data in transit
 \item Approach does not protect against nodes with legitimate access to the data
-\item We protect the data from the web browser to the back-end database
+\item We only protect the data from the web browser to the back-end database
 \end{itemize}
 \end{frame}
 
@@ -108,8 +110,8 @@ SOA partners varies
 
 \begin{frame}
 \frametitle{Related work: Proxy re-encryption}
-For all plaintext $P$, Alice $\langle pk_A, sk_A \rangle$, Bob $\langle pk_B,
-sk_B \rangle$:
+For all plaintext $P$, some Alice $\langle pk_A, sk_A \rangle$, Bob $\langle
+pk_B, sk_B \rangle$:
 \begin{equation*}
 pk_B(p) = rk_{A \to B}( pk_A (P))
 \end{equation*}
@@ -121,8 +123,9 @@ pk_B(p) = rk_{A \to B}( pk_A (P))
 
 \begin{frame}
 \frametitle{W3bCrypt}
+Introduced end-to-end encryption in web pipelines
+\smallskip
 \begin{itemize}
-\item Introduced end-to-end encryption in web pipelines
 \item Firefox plugin for application-level crypto
 \item Requires disclosure of corporate network details
 \end{itemize}
@@ -132,9 +135,9 @@ pk_B(p) = rk_{A \to B}( pk_A (P))
 \begin{frame}
 \frametitle{Architecture}
 \begin{itemize}
+\item Network model
 \item Design goals
 \item F3ieldCrypt architecture
-\item Example session
 \end{itemize}
 \end{frame}
 
@@ -147,12 +150,12 @@ pk_B(p) = rk_{A \to B}( pk_A (P))
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-\frametitle{Threat model}
-\begin{itemize}
-\item XXX
-\end{itemize}
-\end{frame}
+% \begin{frame}
+% \frametitle{Threat model}
+% \begin{itemize}
+% \item XXX
+% \end{itemize}
+% \end{frame}
 
 \begin{frame}
 \frametitle{Design goals}
@@ -160,8 +163,10 @@ pk_B(p) = rk_{A \to B}( pk_A (P))
 \item End-to-end protection of XML fields -- even across SOA boundaries
 \item Confidentiality of logical architecture of each SOA must be respected
 \end{itemize}
-\emph{Do not provide protection against compromise or failure of entities with
-legitimate access to sensitive information.}
+\medskip
+\small{\emph{This work does not focus on providing protection against
+compromise or failure of entities with legitimate access to sensitive
+information.}}
 \end{frame}
 
 \begin{frame}
@@ -169,8 +174,8 @@ legitimate access to sensitive information.}
 \begin{itemize}
 \item Each SOA $s$ publishes a public key $pk_{E_s}$
 \item Browser $b$ generates plaintext $P$
-\item $b$ sends $C = pk_{E_s}(P)$ 
-\item At $s$, proxy re-encrypt $C$ to internal hosts and partner SOAs $0...n$ 
+\item $b$ sends $C = pk_{E_s}(P)$ to $s$
+\item $s$ proxy re-encrypts $C$ to internal hosts and partner SOAs $0...n$ 
 \end{itemize}
 \end{frame}
 
@@ -179,8 +184,8 @@ legitimate access to sensitive information.}
 \begin{itemize}
 \item Key pair $\langle pk_{E_s}, sk_{E_s} \rangle$ generated at the
 \alert{external-key holder}
-\item Public keys of applications $pk_{I_0}...pk_{I_n}$ are collected
-\item Used in conjunction with $sk_{E_s}$ to generate $rk_{E \to I_0}...rk_{E
+\item SOA collects the public keys of its applications $pk_{I_0}...pk_{I_n}$
+\item Use in conjunction with $sk_{E_s}$ to generate $rk_{E \to I_0}...rk_{E
 \to I_n}$
 \end{itemize}
 \end{frame}
@@ -218,12 +223,12 @@ engine.
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-\frametitle{Architecture summary}
-\begin{itemize}
-\item XXX: insert image
-\end{itemize}
-\end{frame}
+% \begin{frame}
+% \frametitle{Architecture summary}
+% \begin{itemize}
+% \item XXX: insert image
+% \end{itemize}
+% \end{frame}
 
 \section{Evaluation}
 \begin{frame}
@@ -281,8 +286,8 @@ Macbook Pro
 \begin{frame}
 \frametitle{Conclusion}
 \begin{itemize}
-\item End-to-end protection to users and SOAs
-\item XXX
+\item End-to-end protection to users 
+\item Protection of logical architecture and partnering for SOAs
 \end{itemize}
 \end{frame}
 
