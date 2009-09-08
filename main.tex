@@ -37,9 +37,15 @@ the logical corporate architecture?
 \end{frame}
 
 \section{Introduction}
+\begin{frame}
+\frametitle{}
+\begin{center}
+Introduction
+\end{center}
+\end{frame}
 
 \begin{frame}
-\frametitle{Introduction}
+\frametitle{Merchant trust}
 Users have to trust online merchants:
 \smallskip
 \begin{itemize}
@@ -66,7 +72,7 @@ In this work, we focus on data in transit
 \smallskip
 \begin{itemize}
 \item Approach does not protect against nodes with legitimate access to the data
-\item We only protect the data from the web browser to the back-end database
+\item We protect the data from the web browser to the back-end database
 \end{itemize}
 \end{frame}
 
@@ -90,7 +96,8 @@ Pair-wise key distribution
 \end{frame}
 
 \begin{frame}
-\frametitle{Pair-wise key distribution}
+\frametitle{Design alternative (cont.)}
+Issues with pair-wise key distribution
 \begin{itemize}
 \item Certificates for all hosts in any partner SOAs must also be delivered
 \item Certificate set must be updated each time the architecture of the SOA or
@@ -100,6 +107,13 @@ SOA partners varies
 \end{frame}
 
 \section{Related work}
+\begin{frame}
+\frametitle{}
+\begin{center}
+Related work
+\end{center}
+\end{frame}
+
 % \begin{frame}
 % \frametitle{XACML}
 % \begin{itemize}
@@ -109,15 +123,16 @@ SOA partners varies
 % \end{frame}
 
 \begin{frame}
-\frametitle{Related work: Proxy re-encryption}
-For all plaintext $P$, some Alice $\langle pk_A, sk_A \rangle$, Bob $\langle
-pk_B, sk_B \rangle$:
+\frametitle{Proxy re-encryption}
+\begin{itemize}
+\item Given: plaintext $P$, Alice $\langle pk_A, sk_A \rangle$, and Bob
+$\langle pk_B, sk_B \rangle$
+\item There exists some $rk_{A \to B} = F(sk_A, pk_B)$ such that:
 \begin{equation*}
 pk_B(p) = rk_{A \to B}( pk_A (P))
 \end{equation*}
-\begin{itemize}
 \item \cite{atomic_proxy_reencryption} 
-\item \cite{proxy_reencryption}
+% \item \cite{proxy_reencryption}
 \end{itemize}
 \end{frame}
 
@@ -127,11 +142,20 @@ Introduced end-to-end encryption in web pipelines
 \smallskip
 \begin{itemize}
 \item Firefox plugin for application-level crypto
+\item \emph{``Encryption as a stylesheet''}
 \item Requires disclosure of corporate network details
+\item \cite{w3bcrypt} 
 \end{itemize}
 \end{frame}
 
 \section{Architecture}
+\begin{frame}
+\frametitle{}
+\begin{center}
+Architecture
+\end{center}
+\end{frame}
+
 \begin{frame}
 \frametitle{Architecture}
 \begin{itemize}
@@ -231,6 +255,13 @@ engine.
 % \end{frame}
 
 \section{Evaluation}
+\begin{frame}
+\frametitle{}
+\begin{center}
+Evaluation
+\end{center}
+\end{frame}
+
 \begin{frame}
 \frametitle{Implementation}
 \begin{itemize}
