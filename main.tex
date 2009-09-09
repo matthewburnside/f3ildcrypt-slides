@@ -50,7 +50,7 @@ Users have to trust online merchants:
 \smallskip
 \begin{itemize}
 \item Merchant is not malicious
-\item Merchant will always protect sensitive information
+\item Merchant will protect sensitive information for its lifetime
 \item Merchant site is maintained by diligent sysadmins
 \end{itemize}
 \end{frame}
@@ -61,18 +61,19 @@ In Service Oriented Architectures, users have to trust:
 \smallskip
 \begin{itemize}
 \item Merchant \emph{and peer SOAs} are not malicious
-\item Merchant \emph{and peer SOAs} will always protect sensitive information
+\item Merchant \emph{and peer SOAs} will protect sensitive information for its
+lifetime
 \item Merchant \emph{and peer SOAs} are maintained by diligent sysadmins
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Data in transit}
-In this work, we focus on data in transit
+In this work, we focus on data in transit across the SOA pipeline
 \smallskip
 \begin{itemize}
 \item Approach does not protect against nodes with legitimate access to the data
-\item We protect the data from the web browser to the back-end database
+\item We protect the data between the web browser and the back-end database
 \end{itemize}
 \end{frame}
 
@@ -125,7 +126,7 @@ Related work
 \begin{frame}
 \frametitle{Proxy re-encryption}
 \begin{itemize}
-\item Given: plaintext $P$, Alice $\langle pk_A, sk_A \rangle$, and Bob
+\item Given plaintext $P$, Alice $\langle pk_A, sk_A \rangle$, and Bob
 $\langle pk_B, sk_B \rangle$
 \item There exists some $rk_{A \to B} = F(sk_A, pk_B)$ such that:
 \begin{equation*}
@@ -199,7 +200,8 @@ information.}}
 \item Each SOA $s$ publishes a public key $pk_{E_s}$
 \item Browser $b$ generates plaintext $P$
 \item $b$ sends $C = pk_{E_s}(P)$ to $s$
-\item $s$ proxy re-encrypts $C$ to internal hosts and partner SOAs $0...n$ 
+\item $s$ gateway re-encrypts $C$ to internal hosts and partner SOAs
+$I_0...I_n$ 
 \end{itemize}
 \end{frame}
 
@@ -208,51 +210,77 @@ information.}}
 \begin{itemize}
 \item Key pair $\langle pk_{E_s}, sk_{E_s} \rangle$ generated at the
 \alert{external-key holder}
-\item SOA collects the public keys of its applications $pk_{I_0}...pk_{I_n}$
-\item Use in conjunction with $sk_{E_s}$ to generate $rk_{E \to I_0}...rk_{E
-\to I_n}$
+% \item SOA collects the public keys of its applications $pk_{I_0}...pk_{I_n}$
+\item $sk_{E_s}$ used in conjunction with internal application keys
+$pk_{I_0}...pk_{I_n}$ to generate $rk_{E \to I_0}...rk_{E \to I_n}$
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{F3ieldCrypt architecture (cont.)}
+\frametitle{External-key holder}
+External-key holder has $sk_s$ and $pk_{I_0}...pk_{I_n}$.  Its compromise could
+be dangerous.  However:
+\smallskip
 \begin{itemize}
+\item Very low bandwidth requirements
+\item Only needed at setup and when adding new internal hosts
+\item Can be kept offline!
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Key distribution}
+\begin{itemize}
+\item $pk_{E_s}$ is publicized
+\item $rk_{E \to I_0}...rk_{E \to I_n}$ transmitted to \alert{proxy
+re-encryption engine}
 \item By proxy re-encryption:
 \begin{equation*}
 pk_{I_j}(P) = rk_{E \to I_j}( pk_E (P))
 \end{equation*}
-\item Keys $rk_{E \to I_0}...rk_{E \to I_n}$ stored at \alert{proxy
-re-encryption engine}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Proxy re-encryption engine}
 \begin{itemize}
-\item Fields arrive at PRE encrypted under $pk_{E_s}$
-\item Each field $f$ is re-encrypted under $pk_{E \to I_j}$
-\item The mapping $f \to j$ is determined from a XACML policy
+\item Fields arrive at proxy re-encryption engine encrypted under $pk_{E_s}$
+\item Each field $f$ is re-encrypted to $pk_{I_j}$
+\item The mapping $f \to j$ is determined by an admin-defined XACML policy
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Client policy and crypto engines}
-Web clients receive a re-cryptography engine and a policy engine. 
-\medskip
+\frametitle{Browser engine}
 \begin{itemize}
-\item \alert{Policy engine} uses a XACML policy to determine which fields to
-encrypt
-\item \alert{Re-crypto engine} encrypts XML fields as directed by the policy
-engine.
+\item \alert{Browser} generates plaintext $P$ containing a set of fields
+$f_0...f_n$.
+\item $f_0...f_n$ are encrypted under $pk_{E_s}$ and delivered to $s$
 \end{itemize}
 \end{frame}
 
 % \begin{frame}
-% \frametitle{Architecture summary}
+% \frametitle{Client policy and crypto engines}
+% Web clients receive a re-cryptography engine and a policy engine. 
+% \medskip
 % \begin{itemize}
-% \item XXX: insert image
+% \item \alert{Policy engine} uses a XACML policy to determine which fields to
+% encrypt
+% \item \alert{Re-crypto engine} encrypts XML fields as directed by the policy
+% engine.
 % \end{itemize}
 % \end{frame}
+
+\begin{frame}
+\frametitle{Architecture summary}
+% \begin{center}
+\begin{tabular}{ll}
+Browser $\to$ proxy re-encryption engine: & $pk_{E_s}(f_i)$ \\
+proxy re-encryption engine: & $pk_{I_j}(f_i) = rk_{E \to I_j}(pk_{E_s}(f_i))$ \\
+proxy re-encryption engine $\to$ app $j$: & $pk_{I_j}(f_i)$ \\
+\end{tabular}
+% \end{center}
+\end{frame}
 
 \section{Evaluation}
 \begin{frame}
@@ -265,11 +293,11 @@ Evaluation
 \begin{frame}
 \frametitle{Implementation}
 \begin{itemize}
-\item Java-based Re-crypto engine based on JHU-MIT Proxy Re-cryptography
-Library for each web client
+\item Java-based Re-crypto engine uses JHU-MIT Proxy Re-cryptography Library
+for each browser 
+\item XML gateway at the SOA stores the re-encryption engine 
 \item Python-based XML proxy for each internal application to store keys and
 unwrap XML
-\item XML gateway at the SOA stores the re-encryption engine 
 \end{itemize}
 \end{frame}
 
@@ -322,14 +350,15 @@ Macbook Pro
 \end{itemize}
 \end{frame}
 
-\begin{thebibliography}{10}
+\begin{frame}
 \frametitle{References}
-\bibitem[Ateniese et al., 2005]{proxy_reencryption}
-G.~Ateniese, K.~Fu, M.~Green, and S.~Hohenberger.
-\newblock Improved proxy re-encryption schemes with applications to secure
-  distributed storage.
-\newblock In {\em Proceedings of the 12th Annual Network and Distributed
-  Systems Security Symposium (NDSS 2005)}, 2005.
+\begin{thebibliography}{10}
+% \bibitem[Ateniese et al., 2005]{proxy_reencryption}
+% G.~Ateniese, K.~Fu, M.~Green, and S.~Hohenberger.
+% \newblock Improved proxy re-encryption schemes with applications to secure
+%   distributed storage.
+% \newblock In {\em Proceedings of the 12th Annual Network and Distributed
+%   Systems Security Symposium (NDSS 2005)}, 2005.
 
 \bibitem[Blaze et al., 1998]{atomic_proxy_reencryption}
 Matt Blaze, G.~Bleumer, and M.~Strauss.
@@ -341,7 +370,8 @@ Angelos Stavrou, Michael Locasto, and Angelos Keromytis.
 \newblock W3bcrypt: Encryption as a stylesheet.
 \newblock In {\em Proceedings of the 4th Applied Cryptography and Network
   Security Conference (ACNS 2006)}, pages 349--364, 2006.
-
 \end{thebibliography}
+\end{frame}
+
 
 \end{document} 
