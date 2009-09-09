@@ -145,7 +145,7 @@ Related work
 $\langle pk_B, sk_B \rangle$
 \item There exists some $rk_{A \to B} = F(sk_A, pk_B)$ such that:
 \begin{equation*}
-pk_B(p) = rk_{A \to B}( pk_A (P))
+pk_B(P) = rk_{A \to B}( pk_A (P))
 \end{equation*}
 \item \cite{atomic_proxy_reencryption} 
 % \item \cite{proxy_reencryption}
@@ -200,7 +200,7 @@ Architecture
 \begin{frame}
 \frametitle{Design goals}
 \begin{itemize}
-\item End-to-end protection of XML fields -- even across SOA boundaries
+\item End-to-end protection of fields -- even across SOA boundaries
 \item Confidentiality of logical architecture of each SOA must be respected
 \end{itemize}
 \medskip
@@ -233,7 +233,7 @@ $pk_{I_0}...pk_{I_n}$ to generate $rk_{E \to I_0}...rk_{E \to I_n}$
 
 \begin{frame}
 \frametitle{External-key holder}
-External-key holder has $sk_s$ and $pk_{I_0}...pk_{I_n}$ --- its compromise
+External-key holder has $sk_{E_s}$ and $pk_{I_0}...pk_{I_n}$ --- its compromise
 could be dangerous.  However:
 \smallskip
 \begin{itemize}
@@ -308,7 +308,7 @@ Evaluation
 \begin{frame}
 \frametitle{Implementation}
 \begin{itemize}
-\item Java-based Re-crypto engine uses JHU-MIT Proxy Re-cryptography Library
+\item Java-based re-crypto engine uses JHU-MIT Proxy Re-cryptography Library
 for each browser 
 \item XML gateway at the SOA stores the re-encryption engine 
 \item Python-based XML proxy for each internal application to store keys and
