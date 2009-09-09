@@ -56,6 +56,18 @@ Users have to trust online merchants:
 \end{frame}
 
 \begin{frame}
+\frametitle{Service-oriented architecture}
+In this work, we focus on SOAs:
+\smallskip
+\begin{itemize}
+\item Requests to a network have a single entry point
+\item A parent SOA may make requests on multiple child SOAs 
+\item SOAs may operate under differing legal and corporate policies toward
+private data
+\end{itemize}
+\end{frame}
+
+\begin{frame}
 \frametitle{SOA trust}
 In Service Oriented Architectures, users have to trust:
 \smallskip
@@ -69,11 +81,12 @@ lifetime
 
 \begin{frame}
 \frametitle{Data in transit}
-In this work, we focus on data in transit across the SOA pipeline
+We consider only data in transit across the SOA pipeline
 \smallskip
 \begin{itemize}
-\item Approach does not protect against nodes with legitimate access to the data
 \item We protect the data between the web browser and the back-end database
+\item Our approach does not protect against nodes with legitimate access to the
+data
 \end{itemize}
 \end{frame}
 
@@ -90,8 +103,9 @@ In this work, we focus on data in transit across the SOA pipeline
 Pair-wise key distribution
 \smallskip
 \begin{itemize}
-\item Generate a certificate for each potential target host in the SOA pipeline
-\item Deliver certificate set to each web browser
+\item Generate a public key for each potential destination host in the SOA
+pipeline
+\item Deliver public keys to each web browser
 \item Browser encrypts each field direct to its destination host 
 \end{itemize}
 \end{frame}
@@ -99,10 +113,11 @@ Pair-wise key distribution
 \begin{frame}
 \frametitle{Design alternative (cont.)}
 Issues with pair-wise key distribution
+\smallskip
 \begin{itemize}
-\item Certificates for all hosts in any partner SOAs must also be delivered
-\item Certificate set must be updated each time the architecture of the SOA or
-SOA partners varies
+\item Public keys for all hosts in any partner SOAs must also be delivered
+\item Public keys must be updated each time the architecture of the SOA or
+its partners varies
 \item Reveals the logical architecture of the SOA and its SOA partners
 \end{itemize}
 \end{frame}
@@ -142,8 +157,8 @@ pk_B(p) = rk_{A \to B}( pk_A (P))
 Introduced end-to-end encryption in web pipelines
 \smallskip
 \begin{itemize}
-\item Firefox plugin for application-level crypto
 \item \emph{``Encryption as a stylesheet''}
+\item Firefox plugin for application-level crypto
 \item Requires disclosure of corporate network details
 \item \cite{w3bcrypt} 
 \end{itemize}
@@ -200,7 +215,7 @@ information.}}
 \item Each SOA $s$ publishes a public key $pk_{E_s}$
 \item Browser $b$ generates plaintext $P$
 \item $b$ sends $C = pk_{E_s}(P)$ to $s$
-\item $s$ gateway re-encrypts $C$ to internal hosts and partner SOAs
+\item Gateway at $s$ re-encrypts $C$ to internal hosts and partner SOAs
 $I_0...I_n$ 
 \end{itemize}
 \end{frame}
@@ -218,8 +233,8 @@ $pk_{I_0}...pk_{I_n}$ to generate $rk_{E \to I_0}...rk_{E \to I_n}$
 
 \begin{frame}
 \frametitle{External-key holder}
-External-key holder has $sk_s$ and $pk_{I_0}...pk_{I_n}$.  Its compromise could
-be dangerous.  However:
+External-key holder has $sk_s$ and $pk_{I_0}...pk_{I_n}$ --- its compromise
+could be dangerous.  However:
 \smallskip
 \begin{itemize}
 \item Very low bandwidth requirements
@@ -254,7 +269,7 @@ pk_{I_j}(P) = rk_{E \to I_j}( pk_E (P))
 \frametitle{Browser engine}
 \begin{itemize}
 \item \alert{Browser} generates plaintext $P$ containing a set of fields
-$f_0...f_n$.
+$f_0...f_n$
 \item $f_0...f_n$ are encrypted under $pk_{E_s}$ and delivered to $s$
 \end{itemize}
 \end{frame}
@@ -275,7 +290,7 @@ $f_0...f_n$.
 \frametitle{Architecture summary}
 % \begin{center}
 \begin{tabular}{ll}
-Browser $\to$ proxy re-encryption engine: & $pk_{E_s}(f_i)$ \\
+browser $\to$ proxy re-encryption engine: & $pk_{E_s}(f_i)$ \\
 proxy re-encryption engine: & $pk_{I_j}(f_i) = rk_{E \to I_j}(pk_{E_s}(f_i))$ \\
 proxy re-encryption engine $\to$ app $j$: & $pk_{I_j}(f_i)$ \\
 \end{tabular}
