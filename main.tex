@@ -1,5 +1,6 @@
 \documentclass{beamer}
 \usetheme{Rochester}
+\usecolortheme{seagull}
 
 \title[F3ildCrypt]{F3ildCrypt: End-to-End Protection of Sensitive Information
 in Web Services}
@@ -40,7 +41,7 @@ the logical corporate architecture?
 \begin{frame}
 \frametitle{}
 \begin{center}
-Introduction
+\Large{Introduction}
 \end{center}
 \end{frame}
 
@@ -90,16 +91,8 @@ data
 \end{itemize}
 \end{frame}
 
-% \begin{frame}
-% \frametitle{Example}
-% \begin{itemize}
-% \item XXX: Diagram showing web browser, merchant, and SOA doing credit-card
-% transactions.  Even with SSL, only protected from web browser to merchant.
-% \end{itemize}
-% \end{frame}
-
 \begin{frame}
-\frametitle{Design alternative}
+\frametitle{Design alternative \#1}
 Pair-wise key distribution
 \smallskip
 \begin{itemize}
@@ -111,7 +104,7 @@ pipeline
 \end{frame}
 
 \begin{frame}
-\frametitle{Design alternative (cont.)}
+\frametitle{Design alternative \#1 (cont.)}
 Issues with pair-wise key distribution
 \smallskip
 \begin{itemize}
@@ -122,21 +115,45 @@ its partners varies
 \end{itemize}
 \end{frame}
 
+\begin{frame}
+\frametitle{Design alternative \#2}
+Point-to-point SSL
+\smallskip
+\begin{itemize}
+\item SSL connection from browser to SOA gateway
+\item From the gateway, distribute fields to internal hosts via SSL
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Design alternative \#2 (cont.)}
+Issues with point-to-point SSL
+\smallskip
+\begin{itemize}
+\item User has no insight into backend field protection 
+\item Plaintext fields are revealed at the gateway
+\end{itemize}
+\end{frame}
+
 \section{Related work}
 \begin{frame}
 \frametitle{}
 \begin{center}
-Related work
+\Large{Related work}
 \end{center}
 \end{frame}
 
-% \begin{frame}
-% \frametitle{XACML}
-% \begin{itemize}
-% \item eXtensible Access Control Markup Language
-% \item XML standard for defining policies, requests, and reponses
-% \end{itemize}
-% \end{frame}
+\begin{frame}
+\frametitle{W3bCrypt}
+Introduced end-to-end encryption in web pipelines
+\smallskip
+\begin{itemize}
+\item \emph{``Encryption as a stylesheet''}
+\item Firefox plugin for application-level crypto
+\item Requires disclosure of corporate network details
+\item \cite{w3bcrypt} 
+\end{itemize}
+\end{frame}
 
 \begin{frame}
 \frametitle{Proxy re-encryption}
@@ -152,50 +169,13 @@ pk_B(P) = rk_{A \to B}( pk_A (P))
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-\frametitle{W3bCrypt}
-Introduced end-to-end encryption in web pipelines
-\smallskip
-\begin{itemize}
-\item \emph{``Encryption as a stylesheet''}
-\item Firefox plugin for application-level crypto
-\item Requires disclosure of corporate network details
-\item \cite{w3bcrypt} 
-\end{itemize}
-\end{frame}
-
 \section{Architecture}
 \begin{frame}
 \frametitle{}
 \begin{center}
-Architecture
+\Large{Architecture}
 \end{center}
 \end{frame}
-
-\begin{frame}
-\frametitle{Architecture}
-\begin{itemize}
-\item Network model
-\item Design goals
-\item F3ieldCrypt architecture
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Network model}
-\begin{itemize}
-\item SOA-style network
-\item Each SOA may have multiple partner SOAs
-\item SOAs wish to prevent disclosure of logical architecture and peering 
-\end{itemize}
-\end{frame}
-
-% \begin{frame}
-% \frametitle{Threat model}
-% \begin{itemize}
-% \item XXX
-% \end{itemize}
-% \end{frame}
 
 \begin{frame}
 \frametitle{Design goals}
@@ -261,7 +241,7 @@ pk_{I_j}(P) = rk_{E \to I_j}( pk_E (P))
 \begin{itemize}
 \item Fields arrive at proxy re-encryption engine encrypted under $pk_{E_s}$
 \item Each field $f$ is re-encrypted to $pk_{I_j}$
-\item The mapping $f \to j$ is determined by an admin-defined XACML policy
+\item The mapping $f \to j$ is determined by an admin-defined policy
 \end{itemize}
 \end{frame}
 
@@ -301,7 +281,7 @@ proxy re-encryption engine $\to$ app $j$: & $pk_{I_j}(f_i)$ \\
 \begin{frame}
 \frametitle{}
 \begin{center}
-Evaluation
+\Large{Evaluation}
 \end{center}
 \end{frame}
 
@@ -358,12 +338,20 @@ Macbook Pro
 
 \section{Conclusion}
 \begin{frame}
-\frametitle{Conclusion}
+\frametitle{Summary}
 \begin{itemize}
-\item End-to-end protection to users 
-\item Protection of logical architecture and partnering for SOAs
+\item SOA logical architecture is protected
+\item Field contents exposed only at the endpoints
 \end{itemize}
 \end{frame}
+
+\begin{frame}
+\frametitle{}
+\begin{center}
+\Large{Questions?}
+\end{center}
+\end{frame}
+
 
 \begin{frame}
 \frametitle{References}
